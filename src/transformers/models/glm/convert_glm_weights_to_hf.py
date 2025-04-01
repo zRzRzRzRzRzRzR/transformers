@@ -23,6 +23,11 @@ STATE_DICT_MAPPING = {
 
     # Layers keys
     r"transformer.encoder.layers.(\d+).input_layernorm.weight":                       r"model.layers.\1.input_layernorm.weight",
+
+    # GLM-4-0414-Using
+    r"transformer.encoder.layers.(\d+).post_mlp_layernorm.weight":                    r"model.layers.\1.post_mlp_layernorm.weight",
+    r"transformer.encoder.layers.(\d+).post_self_attn_layernorm.weight":              r"model.layers.\1.post_self_attn_layernorm.weight",
+
     r"transformer.encoder.layers.(\d+).post_attention_layernorm.weight":              r"model.layers.\1.post_attention_layernorm.weight",
 
     # Attention keys

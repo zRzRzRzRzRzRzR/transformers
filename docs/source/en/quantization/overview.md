@@ -40,7 +40,7 @@ Use the Space below to help you pick a quantization method depending on your har
 | [VPTQ](./vptq)                             | 🔴                   | 🔴              |     🟢     | 🟡        | 🔴                                 | 🔴              | 🟢              | 1/8         | 🔴               | 🟢                          | 🟢                      | https://github.com/microsoft/VPTQ            |
 | [FINEGRAINED_FP8](./finegrained_fp8)                 | 🟢                   | 🔴              | 🟢        | 🔴        | 🔴                                 | 🔴              | 🔴              | 8             | 🔴               | 🟢                          | 🟢                      |        |
 | [SpQR](./spqr)                          | 🔴                       |  🔴   | 🟢        | 🔴              |    🔴    | 🔴         |         🟢              | 3              |              🔴                     | 🟢           | 🟢                      | https://github.com/Vahe1994/SpQR/       |
-| [Quark](./quark)                           | 🔴                       | 🟢 | 🟢      | 🟢      | 🟢                   | 🟢       | ?               | 2/4/6/8/9/16 | 🔴                | 🔴                               | 🟢                       | https://quark.docs.amd.com/latest/                      |
+| [Quark](./quark.md)                           | 🔴                       | 🟢 | 🟢      | 🟢      | 🟢                   | 🟢       | ?               | 2/4/6/8/9/16 | 🔴                | 🔴                               | 🟢                       | https://quark.docs.amd.com/latest/                      |
 
 ## Resources
 

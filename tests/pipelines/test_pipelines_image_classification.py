@@ -14,7 +14,6 @@
 
 import unittest
 
-import datasets
 from huggingface_hub import ImageClassificationOutputElement
 
 from transformers import (
@@ -26,7 +25,6 @@ from transformers import (
 )
 from transformers.pipelines import ImageClassificationPipeline, pipeline
 from transformers.testing_utils import (
-    _run_pipeline_tests,
     compare_pipeline_output_to_hub_spec,
     is_pipeline_test,
     nested_simplify,
@@ -59,13 +57,6 @@ else:
 class ImageClassificationPipelineTests(unittest.TestCase):
     model_mapping = MODEL_FOR_IMAGE_CLASSIFICATION_MAPPING
     tf_model_mapping = TF_MODEL_FOR_IMAGE_CLASSIFICATION_MAPPING
-
-    if _run_pipeline_tests:
-        # we use revision="refs/pr/1" until the PR is merged
-        # https://hf.co/datasets/hf-internal-testing/fixtures_image_utils/discussions/1
-        _dataset = datasets.load_dataset(
-            "hf-internal-testing/fixtures_image_utils", split="test", revision="refs/pr/1"
-        )
 
     def get_test_pipeline(
         self,
@@ -102,17 +93,23 @@ class ImageClassificationPipelineTests(unittest.TestCase):
             ],
         )
 
+        import datasets
+
+        # we use revision="refs/pr/1" until the PR is merged
+        # https://hf.co/datasets/hf-internal-testing/fixtures_image_utils/discussions/1
+        dataset = datasets.load_dataset("hf-internal-testing/fixtures_image_utils", split="test", revision="refs/pr/1")
+
         # Accepts URL + PIL.Image + lists
         outputs = image_classifier(
             [
                 Image.open("./tests/fixtures/tests_samples/COCO/000000039769.png"),
                 "http://images.cocodataset.org/val2017/000000039769.jpg",
                 # RGBA
-                self._dataset[0]["image"],
+                dataset[0]["image"],
                 # LA
-                self._dataset[1]["image"],
+                dataset[1]["image"],
                 # L
-                self._dataset[2]["image"],
+                dataset[2]["image"],
             ]
         )
         self.assertEqual(

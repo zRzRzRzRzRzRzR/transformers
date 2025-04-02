@@ -150,11 +150,12 @@ class Phi4MultimodalVisionEncoderLayer(nn.Module):
     def __init__(self, config: Phi4MultimodalVisionConfig):
         super().__init__()
         self.embed_dim = config.hidden_size
-        self.layer_norm1 = nn.LayerNorm(self.embed_dim, eps=config.layer_norm_eps)
         self.self_attn = Phi4MultimodalVisionAttention(config)
-        self.layer_norm2 = nn.LayerNorm(self.embed_dim, eps=config.layer_norm_eps)
+        self.layer_norm1 = nn.LayerNorm(self.embed_dim, eps=config.layer_norm_eps)
         self.mlp = Phi4MultimodalVisionMLP(config)
+        self.layer_norm2 = nn.LayerNorm(self.embed_dim, eps=config.layer_norm_eps)
 
+    # Ignore copy
     def forward(
         self,
         hidden_states: torch.Tensor,

@@ -329,13 +329,16 @@ class GlmDecoderLayer(nn.Module):
     def __init__(self, config: GlmConfig, layer_idx: int):
         super().__init__()
         self.hidden_size = config.hidden_size
-
+        self.sandwich = config.sandwich
         self.self_attn = GlmAttention(config=config, layer_idx=layer_idx)
 
         self.mlp = GlmMLP(config)
         self.input_layernorm = GlmRMSNorm(config.hidden_size, eps=config.rms_norm_eps)
-        self.post_self_attn_layernorm = GlmRMSNorm(config.hidden_size, eps=config.rms_norm_eps)
         self.post_attention_layernorm = GlmRMSNorm(config.hidden_size, eps=config.rms_norm_eps)
+
+        if self.sandwich:
+            self.post_self_attn_layernorm = GlmRMSNorm(config.hidden_size, eps=config.rms_norm_eps)
+            self.post_mlp_layernorm = GlmRMSNorm(config.hidden_size, eps=config.rms_norm_eps)
 
     def forward(
         self,
@@ -365,14 +368,16 @@ class GlmDecoderLayer(nn.Module):
             position_embeddings=position_embeddings,
             **kwargs,
         )
-        hidden_states = self.post_self_attn_layernorm(hidden_states)
+        if self.sandwich:
+            hidden_states = self.post_self_attn_layernorm(hidden_states)
         hidden_states = residual + hidden_states
 
         # Fully Connected
         residual = hidden_states
         hidden_states = self.post_attention_layernorm(hidden_states)
         hidden_states = self.mlp(hidden_states)
-        hidden_states = self.post_mlp_layernorm(hidden_states)
+        if self.sandwich:
+            hidden_states = self.post_mlp_layernorm(hidden_states)
         hidden_states = residual + hidden_states
 
         outputs = (hidden_states,)

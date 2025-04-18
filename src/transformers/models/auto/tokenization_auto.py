@@ -471,6 +471,7 @@ else:
                 ),
             ),
             ("qwen2_vl", ("Qwen2Tokenizer", "Qwen2TokenizerFast" if is_tokenizers_available() else None)),
+            ("glm4v", ("Qwen2Tokenizer", "Qwen2TokenizerFast" if is_tokenizers_available() else None)),
             (
                 "qwen3",
                 (
